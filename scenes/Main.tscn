@@ -3,6 +3,13 @@
 [ext_resource type="PackedScene" uid="uid://cyktsg5pd1m4w" path="res://scenes/Player.tscn" id="1_elqb8"]
 [ext_resource type="Script" uid="uid://c3op7i2oy8xpu" path="res://scripts/main.gd" id="1_rarhs"]
 [ext_resource type="PackedScene" uid="uid://bftid7mmr1drl" path="res://scenes/Enemy.tscn" id="2_rvslj"]
+[ext_resource type="Script" uid="uid://byedu0n2318gb" path="res://scripts/hud.gd" id="4_rarhs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rarhs"]
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [node name="Main" type="Node2D" unique_id=327479816]
 script = ExtResource("1_rarhs")
@@ -14,3 +21,81 @@ position = Vector2(2500, 2500)
 
 [node name="Enemy" parent="." unique_id=922386175 instance=ExtResource("2_rvslj")]
 position = Vector2(2800, 2800)
+
+[node name="EnemySpawnTimer" type="Timer" parent="." unique_id=1493410749]
+wait_time = 2.0
+autostart = true
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1283830540]
+
+[node name="HUD" type="Control" parent="UI" unique_id=436200017]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_rarhs")
+
+[node name="HpLabel" type="Label" parent="UI/HUD" unique_id=1975229029]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 137.0
+offset_bottom = 43.0
+text = "HP       ♥♥♥"
+
+[node name="ShellLabel" type="Label" parent="UI/HUD" unique_id=36379131]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 50.0
+offset_right = 135.0
+offset_bottom = 73.0
+text = "SHELL    READY"
+
+[node name="KillsLabel" type="Label" parent="UI/HUD" unique_id=932262007]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 90.0
+offset_right = 88.0
+offset_bottom = 113.0
+text = "KILLS    0"
+
+[node name="TimeLabel" type="Label" parent="UI/HUD" unique_id=1267610550]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 120.0
+offset_right = 120.0
+offset_bottom = 143.0
+text = "TIME     00:00"
+
+[node name="GameOverPanel" type="PanelContainer" parent="UI" unique_id=1685184771]
+visible = false
+offset_left = 440.0
+offset_top = 180.0
+offset_right = 840.0
+offset_bottom = 540.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_rarhs")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/GameOverPanel" unique_id=478414520]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="UI/GameOverPanel/VBoxContainer" unique_id=682389993]
+layout_mode = 2
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="KillsLabel" type="Label" parent="UI/GameOverPanel/VBoxContainer" unique_id=216941827]
+layout_mode = 2
+text = "KILLS 0"
+horizontal_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="UI/GameOverPanel/VBoxContainer" unique_id=1040772886]
+layout_mode = 2
+text = "SURVIVAL 00:00"
+horizontal_alignment = 1
+
+[node name="RetryButton" type="Button" parent="UI/GameOverPanel/VBoxContainer" unique_id=1170187333]
+layout_mode = 2
+text = "RETRY"
+
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
+[connection signal="pressed" from="UI/GameOverPanel/VBoxContainer/RetryButton" to="." method="_on_retry_button_pressed"]

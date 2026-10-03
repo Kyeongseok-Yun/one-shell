@@ -1,5 +1,6 @@
 extends CharacterBody2D # 이 스크립트가 Player의 물리 이동 기능을 사용하겠다는 뜻
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var hud = get_tree().current_scene.get_node("UI/HUD")
 
 # Pellet 장면을 미리 불러옴
 const PELLET_SCENE = preload("res://scenes/Pellet.tscn")
@@ -11,6 +12,16 @@ const SHELL_SCENE = preload("res://scenes/Shell.tscn")
 @export var pellet_count: int = 5
 @export var spread_angle: float = 25.0
 
+# 한 번 맞은 뒤 다시 맞을 수 있기까지의 시간
+@export var damage_cooldown: float = 0.8
+
+# 현재 데미지를 받을 수 있는 상태인지
+var can_take_damage: bool = true
+
+# 플레이어 최대 체력
+@export var max_health: int = 3
+# 현재 체력
+var health: int = 3
 # 현재 장전된 탄약 수
 var ammo: int = 1
 
@@ -53,7 +64,7 @@ func _physics_process(delta):
 func shoot():
 	# 발사했으므로 탄약 소모
 	ammo = 0
-
+	hud.update_shell(ammo)
 	# 플레이어 → 마우스 기본 발사 방향
 	var base_direction = global_position.direction_to(get_global_mouse_position())
 
@@ -94,3 +105,50 @@ func shoot():
 
 func reload_shell():
 	ammo = 1
+	hud.update_shell(ammo)
+
+func take_damage(amount: int):
+	# 무적시간 중이면 데미지 무시
+	if not can_take_damage:
+		return
+
+	# 체력 감소
+	health -= amount
+	hud.update_hp(health)
+
+	# 무적 상태 시작
+	can_take_damage = false
+
+	print("Player HP: ", health)
+
+	# 체력이 0 이하라면 사망
+	if health <= 0:
+		die()
+		return
+
+	# 피격 깜빡임 시작
+	flash_invincibility()
+
+	# 무적시간 대기
+	await get_tree().create_timer(damage_cooldown).timeout
+
+	# 다시 피격 가능
+	can_take_damage = true
+
+	# 혹시 깜빡임 도중 꺼진 상태라면 다시 표시
+	sprite.visible = true
+
+
+func die():
+	var main = get_tree().current_scene
+
+	if main.has_method("game_over"):
+		main.game_over()
+
+func flash_invincibility():
+	for i in 4:
+		sprite.visible = false
+		await get_tree().create_timer(0.1).timeout
+
+		sprite.visible = true
+		await get_tree().create_timer(0.1).timeout

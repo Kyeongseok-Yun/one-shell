@@ -6,7 +6,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_bwhen"]
 radius = 25.0
 
-[node name="Enemy" type="CharacterBody2D" unique_id=922386175]
+[sub_resource type="CircleShape2D" id="CircleShape2D_wts8x"]
+radius = 35.0
+
+[node name="Enemy" type="CharacterBody2D" unique_id=922386175 groups=["enemy"]]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_55jtl")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1170758812]
@@ -15,3 +20,11 @@ texture = ExtResource("2_55jtl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=769282587]
 shape = SubResource("CircleShape2D_bwhen")
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=924018785]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1265877995]
+shape = SubResource("CircleShape2D_wts8x")
+
+[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]

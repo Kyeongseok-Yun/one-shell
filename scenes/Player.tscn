@@ -5,7 +5,8 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wts8x"]
 
-[node name="Player" type="CharacterBody2D" unique_id=1702065516]
+[node name="Player" type="CharacterBody2D" unique_id=1702065516 groups=["player"]]
+collision_mask = 0
 script = ExtResource("1_v6fml")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=537721001]

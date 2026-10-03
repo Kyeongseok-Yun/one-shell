@@ -7,6 +7,7 @@
 radius = 60.0
 
 [node name="Shell" type="Area2D" unique_id=1191973546]
+collision_layer = 0
 script = ExtResource("1_6x7hd")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1756921952]
