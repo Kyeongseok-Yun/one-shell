@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://br0eqb4t4ffaw"]
+
+[ext_resource type="Script" uid="uid://bldeiuu7m0niu" path="res://scripts/shell.gd" id="1_6x7hd"]
+[ext_resource type="Texture2D" uid="uid://ba02k0qhct1pp" path="res://assets/sprites/shell_icon.png" id="1_dn4q0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wts8x"]
+radius = 60.0
+
+[node name="Shell" type="Area2D" unique_id=1191973546]
+script = ExtResource("1_6x7hd")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1756921952]
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("1_dn4q0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1261050828]
+shape = SubResource("CircleShape2D_wts8x")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

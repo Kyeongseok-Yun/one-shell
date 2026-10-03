@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bftid7mmr1drl"]
+
+[ext_resource type="Script" uid="uid://3qu35rvl1hki" path="res://scripts/enemy.gd" id="1_55jtl"]
+[ext_resource type="Texture2D" uid="uid://dinv3v4ecfr0s" path="res://assets/sprites/zombie_icon.png" id="2_55jtl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bwhen"]
+radius = 25.0
+
+[node name="Enemy" type="CharacterBody2D" unique_id=922386175]
+script = ExtResource("1_55jtl")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1170758812]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_55jtl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=769282587]
+shape = SubResource("CircleShape2D_bwhen")
