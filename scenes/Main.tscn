@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://c3op7i2oy8xpu" path="res://scripts/main.gd" id="1_rarhs"]
 [ext_resource type="PackedScene" uid="uid://bftid7mmr1drl" path="res://scenes/Enemy.tscn" id="2_rvslj"]
 [ext_resource type="Script" uid="uid://byedu0n2318gb" path="res://scripts/hud.gd" id="4_rarhs"]
+[ext_resource type="Texture2D" uid="uid://bvdwnmet85q76" path="res://assets/sprites/crosshair_32.png" id="5_vcsgt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rarhs"]
 corner_radius_top_left = 12
@@ -68,6 +69,7 @@ offset_bottom = 143.0
 text = "TIME     00:00"
 
 [node name="GameOverPanel" type="PanelContainer" parent="UI" unique_id=1685184771]
+process_mode = 2
 visible = false
 offset_left = 440.0
 offset_top = 180.0
@@ -96,6 +98,12 @@ horizontal_alignment = 1
 [node name="RetryButton" type="Button" parent="UI/GameOverPanel/VBoxContainer" unique_id=1170187333]
 layout_mode = 2
 text = "RETRY"
+
+[node name="Crosshair" type="TextureRect" parent="UI" unique_id=1602755646]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(3, 3)
+texture = ExtResource("5_vcsgt")
 
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 [connection signal="pressed" from="UI/GameOverPanel/VBoxContainer/RetryButton" to="." method="_on_retry_button_pressed"]

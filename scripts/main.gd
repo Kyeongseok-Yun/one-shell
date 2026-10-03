@@ -15,6 +15,7 @@ var survival_time: float = 0.0
 
 # HUD 참조
 @onready var hud = $UI/HUD
+@onready var crosshair = $UI/Crosshair
 
 @onready var game_over_panel = $UI/GameOverPanel
 @onready var game_over_kills_label = $UI/GameOverPanel/VBoxContainer/KillsLabel
@@ -23,6 +24,10 @@ var survival_time: float = 0.0
 
 func _ready():
 	create_ground()
+	
+	#크로스헤어 장착
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	
 	var player = get_tree().get_first_node_in_group("player")
 
 	hud.update_hp(player.health)
@@ -98,6 +103,9 @@ func spawn_enemy():
 func _process(delta):
 	survival_time += delta
 	hud.update_time(survival_time)
+	
+	var mouse_pos = get_viewport().get_mouse_position()
+	crosshair.position = mouse_pos - crosshair.size / 2
 
 func add_kill():
 	kills += 1
@@ -122,5 +130,6 @@ func game_over():
 
 
 func _on_retry_button_pressed() -> void:
+	print("RETRY CLICKED")
 	get_tree().paused = false
 	get_tree().reload_current_scene()
