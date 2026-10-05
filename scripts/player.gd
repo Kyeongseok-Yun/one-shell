@@ -11,6 +11,7 @@ const SHELL_SCENE = preload("res://scenes/Shell.tscn")
 @export var speed: float = 250.0
 @export var pellet_count: int = 5
 @export var spread_angle: float = 25.0
+@export var knockback_force: float = 250.0
 
 # 한 번 맞은 뒤 다시 맞을 수 있기까지의 시간
 @export var damage_cooldown: float = 0.8
@@ -94,6 +95,7 @@ func shoot():
 		get_parent().add_child(pellet)
 
 		pellet.global_position = global_position
+		pellet.knockback_force = knockback_force
 
 		# -spread_angle/2 ~ +spread_angle/2 범위로 각 Pellet의 각도 분산
 		var angle_offset = deg_to_rad(

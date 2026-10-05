@@ -99,11 +99,74 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "RETRY"
 
+[node name="UpgradePanel" type="PanelContainer" parent="UI" unique_id=859798449]
+process_mode = 2
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.5
+offset_top = -64.0
+offset_right = 76.5
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UpgradePanel" unique_id=40776502]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="UI/UpgradePanel/VBoxContainer" unique_id=454780052]
+layout_mode = 2
+text = "CHOOSE UPGRADE"
+
+[node name="PelletButton" type="Button" parent="UI/UpgradePanel/VBoxContainer" unique_id=923017573]
+layout_mode = 2
+text = "PELLET +2"
+
+[node name="KnockbackButton" type="Button" parent="UI/UpgradePanel/VBoxContainer" unique_id=480138722]
+layout_mode = 2
+text = "KNOCKBACK +20%"
+
+[node name="SpeedButton" type="Button" parent="UI/UpgradePanel/VBoxContainer" unique_id=481313406]
+layout_mode = 2
+text = "MOVE SPEED +10%"
+
 [node name="Crosshair" type="TextureRect" parent="UI" unique_id=1602755646]
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(3, 3)
 texture = ExtResource("5_vcsgt")
 
+[node name="StatsPanel" type="PanelContainer" parent="UI" unique_id=542317639]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -138.0
+offset_bottom = 104.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/StatsPanel" unique_id=323601513]
+layout_mode = 2
+
+[node name="STATS" type="Label" parent="UI/StatsPanel/VBoxContainer" unique_id=62424730]
+layout_mode = 2
+
+[node name="PelletStat" type="Label" parent="UI/StatsPanel/VBoxContainer" unique_id=405589048]
+layout_mode = 2
+text = "PELLET      5"
+
+[node name="KnockbackStat" type="Label" parent="UI/StatsPanel/VBoxContainer" unique_id=1665452621]
+layout_mode = 2
+text = "KNOCKBACK   250"
+
+[node name="SpeedStat" type="Label" parent="UI/StatsPanel/VBoxContainer" unique_id=1095168045]
+layout_mode = 2
+text = "MOVE SPEED  250"
+
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_enemy_spawn_timer_timeout"]
 [connection signal="pressed" from="UI/GameOverPanel/VBoxContainer/RetryButton" to="." method="_on_retry_button_pressed"]
+[connection signal="pressed" from="UI/UpgradePanel/VBoxContainer/PelletButton" to="." method="_on_pellet_button_pressed"]
+[connection signal="pressed" from="UI/UpgradePanel/VBoxContainer/KnockbackButton" to="." method="_on_knockback_button_pressed"]
+[connection signal="pressed" from="UI/UpgradePanel/VBoxContainer/SpeedButton" to="." method="_on_speed_button_pressed"]
