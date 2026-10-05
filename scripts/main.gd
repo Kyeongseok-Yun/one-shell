@@ -31,6 +31,7 @@ var survival_time: float = 0.0
 @onready var pellet_stat = $UI/StatsPanel/VBoxContainer/PelletStat
 @onready var knockback_stat = $UI/StatsPanel/VBoxContainer/KnockbackStat
 @onready var speed_stat = $UI/StatsPanel/VBoxContainer/SpeedStat
+@onready var pickup_range_stat = $UI/StatsPanel/VBoxContainer/PickUpStat
 
 ## 적 능력치 변수
 var enemy_level: int = 0
@@ -227,6 +228,7 @@ func update_stats():
 	pellet_stat.text = "PELLET      " + str(player.pellet_count)
 	knockback_stat.text = "KNOCKBACK   " + str(int(player.knockback_force))
 	speed_stat.text = "MOVE SPEED  " + str(int(player.speed))
+	pickup_range_stat.text = "PICKUP RANGE   " + str(int(player.pickup_range))
 
 #보스 스폰 함수
 func spawn_boss():
@@ -257,3 +259,13 @@ func spawn_boss():
 	)
 
 	boss.global_position = spawn_position
+
+
+func _on_pick_up_button_pressed() -> void:
+	var player = get_tree().get_first_node_in_group("player")
+
+	if player:
+		player.pickup_range += 40.0
+
+	update_stats()
+	close_upgrade()

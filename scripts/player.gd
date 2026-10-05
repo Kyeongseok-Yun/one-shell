@@ -25,6 +25,9 @@ const SHELL_SCENE = preload("res://scenes/Shell.tscn")
 @export var spread_angle: float = 25.0
 @export var knockback_force: float = 250.0
 
+#탄약 회수 범위
+@export var pickup_range: float = 65.0
+
 # 대시 기능
 @export var dash_distance: float = 140.0
 @export var dash_cooldown: float = 0.7
@@ -98,18 +101,16 @@ func shoot():
 	# -------------------------
 	var shell = SHELL_SCENE.instantiate()
 	get_parent().add_child(shell)
+	
+	shell.pickup_range = pickup_range
 
-	# Shell이 떨어질 거리: 180 ~ 240px
 	var shell_distance = randf_range(180.0, 240.0)
-
-	# 발사 방향 기준 각도 오차: -10° ~ +10°
-	var shell_angle = deg_to_rad(randf_range(-10.0, 10.0))
-
-	# Shell이 떨어질 방향
+	var shell_angle = deg_to_rad(randf_range(-35.0, 35.0))
 	var shell_direction = base_direction.rotated(shell_angle)
 
-	# 최종 Shell 위치
-	shell.global_position = global_position + shell_direction * shell_distance
+	var shell_target = global_position + shell_direction * shell_distance
+
+	shell.launch(global_position, shell_target)
 
 	# -------------------------
 	# Pellet 발사

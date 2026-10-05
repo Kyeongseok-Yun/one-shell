@@ -134,6 +134,10 @@ text = "KNOCKBACK +20%"
 layout_mode = 2
 text = "MOVE SPEED +10%"
 
+[node name="PickUpButton" type="Button" parent="UI/UpgradePanel/VBoxContainer" unique_id=1910633301]
+layout_mode = 2
+text = "PICK UP RANGE + 40.0"
+
 [node name="Crosshair" type="TextureRect" parent="UI" unique_id=1602755646]
 offset_right = 40.0
 offset_bottom = 40.0
@@ -166,6 +170,9 @@ text = "KNOCKBACK   250"
 layout_mode = 2
 text = "MOVE SPEED  250"
 
+[node name="PickUpStat" type="Label" parent="UI/StatsPanel/VBoxContainer" unique_id=1825269165]
+layout_mode = 2
+
 [node name="BGM" type="AudioStreamPlayer" parent="." unique_id=1156185409]
 stream = ExtResource("6_c01mt")
 volume_db = -3.0
@@ -177,3 +184,4 @@ parameters/looping = true
 [connection signal="pressed" from="UI/UpgradePanel/VBoxContainer/PelletButton" to="." method="_on_pellet_button_pressed"]
 [connection signal="pressed" from="UI/UpgradePanel/VBoxContainer/KnockbackButton" to="." method="_on_knockback_button_pressed"]
 [connection signal="pressed" from="UI/UpgradePanel/VBoxContainer/SpeedButton" to="." method="_on_speed_button_pressed"]
+[connection signal="pressed" from="UI/UpgradePanel/VBoxContainer/PickUpButton" to="." method="_on_pick_up_button_pressed"]
