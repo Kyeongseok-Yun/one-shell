@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cfh24m1s3jrhf" path="res://scripts/player.gd" id="1_v6fml"]
 [ext_resource type="Texture2D" uid="uid://s7e8x6ppnsrx" path="res://assets/sprites/duck_icon.png" id="2_v6fml"]
+[ext_resource type="AudioStream" uid="uid://bmtrx4unvmtjq" path="res://assets/sounds/shotgun_fire.wav" id="3_3li8b"]
+[ext_resource type="Texture2D" uid="uid://dbj45mn3086s0" path="res://assets/sprites/muzzle_flash.png" id="4_mdl7e"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wts8x"]
 
@@ -22,3 +24,12 @@ limit_left = 0
 limit_top = 0
 limit_right = 5000
 limit_bottom = 5000
+
+[node name="ShotgunSound" type="AudioStreamPlayer2D" parent="." unique_id=335140195]
+stream = ExtResource("3_3li8b")
+volume_db = -5.0
+
+[node name="MuzzleFlash" type="Sprite2D" parent="." unique_id=1141219468]
+visible = false
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_mdl7e")

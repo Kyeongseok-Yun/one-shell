@@ -7,6 +7,9 @@ const ENEMY_SCENE = preload("res://scenes/Enemy.tscn")
 @export var map_width: int = 5000
 @export var map_height: int = 5000
 
+#bgm 등록
+@onready var bgm: AudioStreamPlayer = $BGM
+
 # 현재 킬 수
 var kills: int = 0
 
@@ -34,6 +37,10 @@ var enemy_level: int = 0
 var next_enemy_upgrade_time: float = 30.0
 var enemy_base_health: int = 3
 var enemy_base_speed: float = 100.0
+
+#보스 등장 패턴
+const BOSS_SCENE = preload("res://scenes/BossEnemy.tscn")
+var boss_spawned: bool = false
 
 func _ready():
 	create_ground()
@@ -139,8 +146,13 @@ func add_kill():
 	if kills >= next_upgrade_kills:
 		next_upgrade_kills += 10
 		show_upgrade()
+	if kills >= 30 and not boss_spawned:
+		boss_spawned = true
+		spawn_boss()	
 
 func game_over():
+	bgm.stop()
+	
 	# 게임 정지
 	get_tree().paused = true
 	# Game Over UI 표시
@@ -215,3 +227,33 @@ func update_stats():
 	pellet_stat.text = "PELLET      " + str(player.pellet_count)
 	knockback_stat.text = "KNOCKBACK   " + str(int(player.knockback_force))
 	speed_stat.text = "MOVE SPEED  " + str(int(player.speed))
+
+#보스 스폰 함수
+func spawn_boss():
+	var boss = BOSS_SCENE.instantiate()
+	add_child(boss)
+
+	var player = get_tree().get_first_node_in_group("player")
+
+	if player == null:
+		return
+
+	var spawn_distance = 800.0
+	var random_angle = randf_range(0.0, TAU)
+	var spawn_direction = Vector2.RIGHT.rotated(random_angle)
+
+	var spawn_position = player.global_position + spawn_direction * spawn_distance
+
+	spawn_position.x = clamp(
+		spawn_position.x,
+		80.0,
+		map_width - 80.0
+	)
+
+	spawn_position.y = clamp(
+		spawn_position.y,
+		80.0,
+		map_height - 80.0
+	)
+
+	boss.global_position = spawn_position

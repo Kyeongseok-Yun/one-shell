@@ -1,4 +1,5 @@
 extends CharacterBody2D
+@onready var death_sound: AudioStreamPlayer2D = $DeathSound
 
 # 플레이어 추적 속도
 @export var move_speed: float = 50.0
@@ -57,6 +58,7 @@ func take_damage(amount: int):
 		return
 
 	health -= amount
+	hit_flash()
 
 	if health <= 0:
 		die()
@@ -73,5 +75,22 @@ func die():
 
 	if main.has_method("add_kill"):
 		main.add_kill()
+	
+	# 충돌/움직임 비활성화
+	set_physics_process(false)
+	$CollisionShape2D.disabled = true
+	$AttackArea.monitoring = false
+	$Sprite2D.visible = false
+
+	death_sound.play()
+	await death_sound.finished	
 
 	queue_free()
+
+func hit_flash():
+	sprite.modulate = Color(1.8, 1.8, 1.8)
+
+	await get_tree().create_timer(0.06).timeout
+
+	if not is_dead:
+		sprite.modulate = Color.WHITE

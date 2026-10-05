@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bjwv7rh7gt5qs"]
+
+[ext_resource type="PackedScene" uid="uid://bftid7mmr1drl" path="res://scenes/Enemy.tscn" id="1_5sw1d"]
+[ext_resource type="Script" uid="uid://ojf4bnnqlk45" path="res://scripts/boss_enemy.gd" id="2_4t2um"]
+[ext_resource type="Texture2D" uid="uid://bhyjdi4j46a7p" path="res://assets/sprites/boss.PNG" id="3_3ip1r"]
+[ext_resource type="AudioStream" uid="uid://q46h2vtqkw88" path="res://assets/sounds/boss_hit.wav" id="4_uudxn"]
+
+[node name="BossEnemy" unique_id=922386175 instance=ExtResource("1_5sw1d")]
+script = ExtResource("2_4t2um")
+
+[node name="Sprite2D" parent="." index="0" unique_id=1170758812]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_3ip1r")
+
+[node name="BossVoice" type="AudioStreamPlayer2D" parent="." index="3" unique_id=183599456]
+volume_db = 3.0
+
+[node name="VoiceTimer" type="Timer" parent="." index="4" unique_id=1959083886]
+one_shot = true
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="." index="5" unique_id=157145474]
+stream = ExtResource("4_uudxn")
+volume_db = 3.0
+
+[connection signal="timeout" from="VoiceTimer" to="." method="_on_voice_timer_timeout"]

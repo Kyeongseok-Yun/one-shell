@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://3qu35rvl1hki" path="res://scripts/enemy.gd" id="1_55jtl"]
 [ext_resource type="Texture2D" uid="uid://dinv3v4ecfr0s" path="res://assets/sprites/zombie_icon.png" id="2_55jtl"]
+[ext_resource type="AudioStream" uid="uid://bldcfvw8wbgln" path="res://assets/sounds/zombie_die_sound.wav" id="3_mpr68"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bwhen"]
 radius = 25.0
@@ -26,5 +27,9 @@ collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1265877995]
 shape = SubResource("CircleShape2D_wts8x")
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="." unique_id=1666311544]
+stream = ExtResource("3_mpr68")
+volume_db = 3.0
 
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
